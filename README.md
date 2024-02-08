@@ -6,7 +6,7 @@ Firstly, it meticulously navigates through the AIESEC website, extracting URLs o
 
 # Second Stage:
 It delves deeper into the gathered URLs, retrieving HTML content and extracting pertinent details about each job opportunity from the JSON output. Leveraging sophisticated parsing techniques, it discerns relevant information such as location, salary, and job description.
-TIP: To expedite this process, the script employs multithreading, allowing for concurrent execution of tasks and significantly reducing processing time.
+TIP: To expedite this process, the script employs multithreading, allowing for concurrent execution of tasks and significantly reducing processing time. \n
 TIP: the script incorporates geocoding capabilities, utilizing services like OpenCageGeocode to extract geographical information associated with each job listing. This enriches the dataset with precise location data, facilitating comprehensive analysis and visualization of job distribution.
 TIP: Incorporating currency conversion functionality. enhances its versatility and utility, particularly for analyzing job opportunities across different regions with varying currencies. Leveraging the capabilities of the Open Exchange Rates API, the script dynamically retrieves up-to-date exchange rates for relevant currencies.
 
