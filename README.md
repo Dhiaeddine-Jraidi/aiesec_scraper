@@ -1,7 +1,7 @@
-The script is a comprehensive automation tool tailored for extracting and analyzing job opportunities listed on the AIESEC website, specifically designed to study the position of Data Analyst role worldwide. Through a meticulously structured process divided into three stages, it streamlines the extraction, analysis, and evaluation of job listings.
+The script is a comprehensive automation tool tailored for extracting and analyzing job opportunities listed on the AIESEC website, specifically designed to study the position of Data Analyst role worldwide. Through a structured process divided into three stages, it streamlines the extraction, analysis, and evaluation of job listings.
 
 ## First Stage:
-using the `selenium` package. it meticulously navigates through the AIESEC website, extracting URLs of all the opportunities listings. These URLs are collected and prepared for subsequent processing and stored to avoid duplication.
+using the `selenium` package. it navigates through the AIESEC website, extracting URLs of all the opportunities listings. These URLs are collected and prepared for subsequent processing and stored to avoid duplication.
 
 ## Second Stage:
 It delves deeper into the gathered URLs, retrieving HTML content and extracting pertinent details about each job opportunity from the JSON output. Leveraging sophisticated parsing techniques, it discerns relevant information such as location, salary, and job description.
@@ -20,7 +20,7 @@ In this stage, the script facilitates the seamless integration of extracted job 
 
 - The script employs robust error handling mechanisms to gracefully manage potential exceptions, ensuring the reliability and robustness of the data insertion process.
 
-- To ensure data integrity and optimal performance, the script meticulously designs and creates database tables tailored to accommodate various aspects of job listings. These tables include "main" for primary job details, "dates" for date-related information, "backgrounds" for background requirements, and "languages" for language proficiency requirements.
+- To ensure data integrity and optimal performance, the script designs and creates database tables tailored to accommodate various aspects of job listings. These tables include "main" for primary job details, "dates" for date-related information, "backgrounds" for background requirements, and "languages" for language proficiency requirements.
 - Utilizing efficient SQL queries, the script iteratively inserts extracted data into corresponding database tables.
 
 ## Conclusion:
