@@ -13,7 +13,7 @@ data_path = 'all_data.xlsx'
 palm_api_list = 'Palm_api_list.txt'
 
 job = "data analyst"
-preferences = "not good in marketing xD"
+preferences = "not good in marketing"
 
 
 while True:
