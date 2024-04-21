@@ -1,4 +1,4 @@
-#scraper_project V2.0
+#scraper_project V3
 
 from first_stage import browsing
 from second_stage import second_stage
