@@ -7,6 +7,7 @@ from selenium.common.exceptions import TimeoutException
 import time
 import pandas as pd
 
+
 def browsing(urls_path):
 
     def extract_urls_from_string(input_string):
@@ -30,14 +31,20 @@ def browsing(urls_path):
         except TimeoutException:
             raise
 
-    chrome_options = webdriver.ChromeOptions()
+    chrome_options = webdriver.ChromeOptions()    
+    
+    ######
+
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument("start-maximized")
+    chrome_options.add_argument("disable-infobars")
+    chrome_options.add_argument("--disable-extensions")
+    chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-gpu")
+    
+    ######
 
     driver = webdriver.Chrome(options=chrome_options)
-
-
     current_date = datetime.now().strftime('%Y-%m-%d')
     x = 8
     product = "talent"
@@ -75,3 +82,5 @@ def browsing(urls_path):
     print("Stage 1 - Completed")
 
     driver.quit()
+
+
