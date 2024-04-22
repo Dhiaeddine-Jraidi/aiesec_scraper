@@ -12,12 +12,10 @@ wget "https://chromedriver.storage.googleapis.com/114.0.5735.16/chromedriver_lin
 unzip -o chromedriver_linux64.zip
 sudo mv -f chromedriver /usr/local/bin/
 sudo rm -f chromedriver_linux64.zip google-chrome-stable_114.0.5735.90-1_amd64.deb
+sudo rm -f LICENSE.chromedriver
 echo "Chrome version 114.0.5735.90 and Chrome WebDriver version 114.0.5735.16 installation completed successfully!"
-
 git clone https://github.com/Dhiaeddine-Jraidi/aiesec_scraper.git
 sudo chmod a+rwx aiesec_scraper
 cd aiesec_scraper
 sudo pip3 install -r requirements.txt
-cd ~
-sudo rm -f LICENSE.chromedriver
 (crontab -l 2>/dev/null; echo "0 0 * * * cd ~/aiesec_scraper && sudo python3 main.py") | crontab -
