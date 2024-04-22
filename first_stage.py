@@ -33,7 +33,6 @@ def browsing(urls_path):
             raise
 
     chrome_options = webdriver.ChromeOptions()    
-    '''
     ######
 
     chrome_options.add_argument('--headless')
@@ -44,7 +43,6 @@ def browsing(urls_path):
     chrome_options.add_argument("--no-sandbox")
     
     ######
-    '''
     driver = webdriver.Chrome(options=chrome_options)
     current_date = datetime.now().strftime('%Y-%m-%d')
     x = 8
