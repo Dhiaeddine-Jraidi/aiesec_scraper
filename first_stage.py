@@ -6,6 +6,7 @@ from datetime import datetime
 from selenium.common.exceptions import TimeoutException
 import time
 import pandas as pd
+from glob_functions import send_message
 
 
 def browsing(urls_path):
@@ -32,7 +33,7 @@ def browsing(urls_path):
             raise
 
     chrome_options = webdriver.ChromeOptions()    
-    
+    '''
     ######
 
     chrome_options.add_argument('--headless')
@@ -43,7 +44,7 @@ def browsing(urls_path):
     chrome_options.add_argument("--no-sandbox")
     
     ######
-
+    '''
     driver = webdriver.Chrome(options=chrome_options)
     current_date = datetime.now().strftime('%Y-%m-%d')
     x = 8
@@ -76,11 +77,10 @@ def browsing(urls_path):
 
     output_urls = extract_urls_from_string(html_content)
     new_urls = list(set(output_urls) - set(df['urls']))
+    num_new_urls = len(new_urls)
     new_df = pd.DataFrame({'urls': new_urls, 'status': 'not_processed'})
     df = pd.concat([df, new_df], ignore_index=True)
     df.to_csv(urls_path, index=False)
     print("Stage 1 - Completed")
-
     driver.quit()
-
-
+    send_message(f"We added {num_new_urls} to the database !")
