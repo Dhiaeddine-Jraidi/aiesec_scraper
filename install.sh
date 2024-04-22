@@ -8,15 +8,11 @@ sudo rm -f /usr/local/bin/google-chrome
 sudo rm -f /usr/local/bin/chromedriver
 wget https://mirror.cs.uchicago.edu/google-chrome/pool/main/g/google-chrome-stable/google-chrome-stable_114.0.5735.90-1_amd64.deb
 sudo apt install -y ./google-chrome-stable_114.0.5735.90-1_amd64.deb
-
 wget "https://chromedriver.storage.googleapis.com/114.0.5735.16/chromedriver_linux64.zip"
-
 unzip -o chromedriver_linux64.zip
 sudo mv -f chromedriver /usr/local/bin/
-rm -f chromedriver_linux64.zip google-chrome-stable_114.0.5735.90-1_amd64.deb
-
+sudo rm -f chromedriver_linux64.zip google-chrome-stable_114.0.5735.90-1_amd64.deb
 echo "Chrome version 114.0.5735.90 and Chrome WebDriver version 114.0.5735.16 installation completed successfully!"
-
 git clone https://github.com/Dhiaeddine-Jraidi/aiesec_scraper.git
 sudo chmod a+rwx aiesec_scraper
 cd aiesec_scraper
