@@ -18,8 +18,8 @@ suitable_languages = {'English', 'Arabic', 'French'}
 
 
 
-#browsing(urls_path)
+browsing(urls_path)
 second_stage(urls_path, data_path, suitable_languages)
 third_stage(opp_id_sent_path, data_path, job, palm_api_list)
-#insert_data_tosql(data_path)
+insert_data_tosql(data_path)
 print("done!")
