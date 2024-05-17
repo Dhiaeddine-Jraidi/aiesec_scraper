@@ -42,4 +42,4 @@ sudo pip3 install -r requirements.txt
 
 
 
-############## run the script using "sudo nohup bash "script_name".sh & "
+############## run the script using "sudo nohup bash install.sh & "
