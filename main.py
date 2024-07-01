@@ -13,7 +13,7 @@ opp_id_sent_path = "files/oppid_sent.csv"
 
 
 job = "data analyst"
-preferences = "not good in marketing xD"
+preferences = "more IT and marketing related"
 suitable_languages = {'English', 'Arabic', 'French'}
 
 
