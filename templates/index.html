@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerBI</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        .container {
+            text-align: center;
+            width: 75%;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+        }
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 98%;
+            border: 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        @keyframes hoverEffect {
+            0% {
+                transform: translateY(0);        
+            }
+            50% {
+                transform: translateY(-26px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .iframe-container iframe.hovered {
+            animation: hoverEffect 0.95s ease-in-out;
+        }
+
+        .refresh-date {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        #content {
+            position: fixed;
+            bottom: 20px; /* Distance from the bottom of the page */
+            right: 35px;  /* Distance from the right of the page */
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between the button and the spinner */
+        }
+
+        .button-85 {
+            padding: 0.6em 2em;
+            border: none;
+            outline: none;
+            color: rgb(255, 255, 255);
+            background: #111;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 10px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+
+        .button-85:before {
+            content: "";
+            background: linear-gradient(
+                45deg,
+                #ff0000,
+                #ff7300,
+                #fffb00,
+                #48ff00,
+                #00ffd5,
+                #002bff,
+                #7a00ff,
+                #ff00c8,
+                #ff0000
+            );
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowing-button-85 20s linear infinite;
+            transition: opacity 0.3s ease-in-out;
+            border-radius: 10px;
+        }
+
+        @keyframes glowing-button-85 {
+            0% {
+                background-position: 0 0;
+            }
+            50% {
+                background-position: 400% 0;
+            }
+            100% {
+                background-position: 0 0;
+            }
+        }
+
+        .button-85:after {
+            z-index: -1;
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #222;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+        }
+
+        .button-85:hover {
+            transform: translateY(-3px);
+        }
+
+        .button-85:active {
+            transform: translateY(1px);
+        }
+
+        #loading-container {
+            display: none;
+            position: relative;
+            width: 60px; /* Set the container size */
+            height: 60px; /* Set the container size */
+            z-index: 1; /* Ensure container is below the button */
+        }
+
+        .loading {
+            display: block;
+            width: 100%; /* Match the container size */
+            height: 100%; /* Match the container size */
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: auto;
+        }
+
+        #mining-gif {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px; /* Set the desired GIF size */
+            height: 50px; /* Set the desired GIF size */
+            transform: translate(-50%, -50%);
+            z-index: 2; /* Make sure the GIF is above the spinner */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="refresh-date" id="refresh-date-container">
+    </div>
+    <div class="container">
+        <h1>PowerBI Report</h1>
+        <div class="iframe-container">
+            <iframe id="report-iframe" title="report" src="https://app.powerbi.com/view?r=eyJrIjoiNzJlMTYyYWItZWQyYS00YzEyLWJiOWEtOTM4YjVjOTZhMjEyIiwidCI6ImRiZDY2NjRkLTRlYjktNDZlYi05OWQ4LTVjNDNiYTE1M2M2MSIsImMiOjl9" frameborder="0" allowFullScreen="true"></iframe>
+        </div>
+    </div>
+    <div id="content">
+      <button class="button-85" id="refresh-btn">Refresh</button>
+      <div id="loading-container">
+          <div class="loading"></div>
+          <img id="mining-gif" src="{{ url_for('static', filename='mining.gif') }}" alt="Loading...">
+      </div>
+   </div>
+
+    <script>
+      window.addEventListener('load', function() {
+          const iframe = document.getElementById('report-iframe');
+          iframe.classList.add('hovered');
+          
+          // Update the refresh date
+          const refreshDate = "{{ refresh_date }}"; // Flask variable
+          document.getElementById('refresh-date-container').innerText = 'Last refreshed on: ' + refreshDate;
+          
+          // Refresh button and loading container
+          const refreshBtn = document.getElementById('refresh-btn');
+          const loadingContainer = document.getElementById('loading-container');
+          let refreshInProgress = false;
+
+          function checkRefreshStatus() {
+              fetch('/get_refresh_status')
+                  .then(response => response.json())
+                  .then(data => {
+                      if (data.refresh_in_progress) {
+                          refreshBtn.style.display = 'none';
+                          loadingContainer.style.display = 'block';
+                          refreshInProgress = true;
+                      } else {
+                          refreshBtn.style.display = 'block';
+                          loadingContainer.style.display = 'none';
+                          refreshInProgress = false;
+                      }
+                  });
+          }
+
+          // Initial check when the page loads
+          checkRefreshStatus();
+
+          // Check every 3 seconds
+          const statusInterval = setInterval(() => {
+              checkRefreshStatus();
+              
+              if (!refreshInProgress) {
+                  clearInterval(statusInterval);
+              }
+          }, 3000);
+
+          refreshBtn.addEventListener('click', function () {
+              if (!refreshInProgress) {
+                  refreshBtn.style.display = 'none';
+                  loadingContainer.style.display = 'block';
+                  refreshInProgress = true;
+
+                  fetch('/refresh', {
+                      method: 'POST',
+                  }).then(response => response.json())
+                  .then(data => {
+                      if (data.success) {
+                          // Start checking the status until the process completes
+                          checkRefreshStatus();
+                      }
+                  });
+              }
+          });
+      });
+    </script>
+</body>
+</html>
